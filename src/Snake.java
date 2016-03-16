@@ -8,8 +8,7 @@ public class Snake {
     int tail = 5;
     int[] snake_X = new int[tail];
     int[] snake_Y = new int[tail];
-    boolean flag_push;
-    Main main = new Main();
+    Main m = new Main();
 
     Snake(int x, int y) {
         snake_X[0] = x;
@@ -52,10 +51,10 @@ public class Snake {
             snake_X[body] = snake_X[body - 1];
             snake_Y[body] = snake_Y[body - 1];
         }
-        if (snake_X[0] >= main.width - 50 && dir == 2) snake_X[0] = -25;
-        if (snake_X[0] <= 0 && dir == 1) snake_X[0] = main.width - 7;
-        if (snake_Y[0] >= main.height - 75 && dir == 0) snake_Y[0] = -25;
-        if (snake_Y[0] <= 0 && dir == 3) snake_Y[0] = main.height - 29;
+        if (snake_X[0] >= m.width - 50 && dir == 2) snake_X[0] = -25;
+        if (snake_X[0] <= 0 && dir == 1) snake_X[0] = m.width - 3;
+        if (snake_Y[0] >= m.height - 25 && dir == 0) snake_Y[0] = -25;
+        if (snake_Y[0] <= 0 && dir == 3) snake_Y[0] = m.height;
 
 
         switch (dir) {

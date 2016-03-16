@@ -5,22 +5,20 @@ import java.awt.event.*;
 
 public class GameField extends JPanel implements ActionListener {
 
-    Main main = new Main();
+    Main m = new Main();
     Snake snake = new Snake(0, 125);
-    Timer mainTimer = new Timer(200, this);
+    Timer mainTimer = new Timer(500, this);
     Image img = new ImageIcon("src\\resources\\bg.gif").getImage();
+
 
     GameField(){
         mainTimer.start();
         addMouseListener(new myMouseAdapter());
         setFocusable(true);
+        this.setLayout(new BorderLayout());
     }
 
-    private class myMouseAdapter extends MouseAdapter{
-        public void mousePressed(MouseEvent e){
-            snake.MousePressed(e);
-        }
-    }
+
 
     protected void paintComponent(Graphics gr) {
         super.paintComponent(gr);
@@ -30,11 +28,11 @@ public class GameField extends JPanel implements ActionListener {
         g.setStroke(pen);
         g.setColor(new Color(183, 153, 0));
 
-        for (int coord_x = 0; coord_x <= main.width; coord_x += 25) {
-            g.drawLine(coord_x, 0, coord_x, main.height);
+        for (int coord_x = 0; coord_x <= m.width; coord_x += 25) {
+            g.drawLine(coord_x, 0, coord_x, m.height);
         }
-        for (int coord_y = 0; coord_y <= main.height; coord_y += 25) {
-            g.drawLine(0, coord_y, main.width, coord_y);
+        for (int coord_y = 0; coord_y <= m.height; coord_y += 25) {
+            g.drawLine(0, coord_y, m.width, coord_y);
         }
         g.setColor(new Color(255, 100, 100));
 
@@ -43,6 +41,11 @@ public class GameField extends JPanel implements ActionListener {
         }
     }
 
+    private class myMouseAdapter extends MouseAdapter{
+        public void mousePressed(MouseEvent e){
+            snake.MousePressed(e);
+        }
+    }
 
     public void actionPerformed(ActionEvent e) {
         snake.move();
