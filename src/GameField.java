@@ -15,7 +15,6 @@ public class GameField extends JPanel implements ActionListener {
         mainTimer.start();
         addMouseListener(new myMouseAdapter());
         setFocusable(true);
-        this.setLayout(new BorderLayout());
     }
 
 
