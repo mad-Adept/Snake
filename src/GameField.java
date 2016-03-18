@@ -7,7 +7,8 @@ public class GameField extends JPanel implements ActionListener {
 
     Main m = new Main();
     Snake snake = new Snake(0, 125);
-    Timer mainTimer = new Timer(500, this);
+    Frog frog = new Frog(m.width, m.height);
+    Timer mainTimer = new Timer(10, this);
     Image img = new ImageIcon("src\\resources\\bg.gif").getImage();
 
 
@@ -33,8 +34,12 @@ public class GameField extends JPanel implements ActionListener {
         for (int coord_y = 0; coord_y <= m.height; coord_y += 25) {
             g.drawLine(0, coord_y, m.width, coord_y);
         }
-        g.setColor(new Color(255, 100, 100));
 
+        g.setColor(new Color(11, 255, 84));
+        g.fillOval(frog.coord_X, frog.coord_Y, 25, 25);
+
+        g.setColor(new Color(255, 100, 100));
+        frog.coordinatsSnake(snake.snake_X, snake.snake_Y, snake.dir);
         for (int part = 0; part <= snake.tail - 1; part++){
             g.fillOval(snake.snake_X[part], snake.snake_Y[part], 25, 25);
         }
@@ -47,7 +52,6 @@ public class GameField extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        snake.move();
-        repaint();
+            repaint();
     }
 }
