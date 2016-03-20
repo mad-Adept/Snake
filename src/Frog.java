@@ -35,10 +35,10 @@ public class Frog implements Runnable {
                 if (coord_Y == infoSnake[1] && coord_X > infoSnake[0]) dir = 2;
                 if (coord_Y == infoSnake[1] && coord_X < infoSnake[0]) dir = 1;
 
-                if (coord_X >= m.width - 25) coord_X = m.width - 50;
-                if (coord_X <= 0) coord_X = 25;
-                if (coord_Y >= m.height - 25) coord_Y = m.height - 50;
-                if (coord_Y <= 0) coord_Y = 25;
+                if (coord_X >= m.width - 25 && dir == 2) coord_X = m.width - 50;
+                if (coord_X <= 0 && dir == 1) coord_X = 25;
+                if (coord_Y >= m.height - 25 && dir == 0) coord_Y = m.height - 50;
+                if (coord_Y <= 0 && dir == 3) coord_Y = 25;
 
                 switch (dir) {
                     case 0:

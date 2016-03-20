@@ -9,6 +9,9 @@ public class GameField extends JPanel implements ActionListener {
     Snake snake = new Snake(0, 125);
     Frog frog = new Frog(m.width, m.height);
     Timer mainTimer = new Timer(10, this);
+    boolean flagStart;
+    boolean flagPause;
+    boolean flagStop;
     Image img = new ImageIcon("src\\resources\\bg.gif").getImage();
 
 
@@ -46,12 +49,28 @@ public class GameField extends JPanel implements ActionListener {
     }
 
     private class myMouseAdapter extends MouseAdapter{
-        public void mousePressed(MouseEvent e){
-            snake.MousePressed(e);
+        public void mousePressed(MouseEvent me){
+            snake.MousePressed(me);
         }
     }
 
     public void actionPerformed(ActionEvent e) {
+
+        if(e.getActionCommand().equals("Start")){
+            System.out.println("Knopka Start");
+           // setEnabled(flagStart);
+        }
+       /* if(e.getActionCommand().equals("Pause")){
+            System.out.println("Knopka Pause");
+            setEnabled(flagPause);
+        }
+        if (e.getActionCommand().equals("Stop")){
+            setEnabled(flagStop);
+            System.out.println("Knopka Stop");
+        }*/
+        if(e.getSource().equals(mainTimer)){
             repaint();
+        }
+
     }
 }

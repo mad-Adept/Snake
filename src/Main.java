@@ -36,6 +36,12 @@ public class Main {
         JButton jbtStart = new JButton("Start");
         JButton jbtPause = new JButton("Pause");
         JButton jbtStop = new JButton("Stop");
+        jbtStart.setActionCommand("Start");
+        jbtPause.setActionCommand("Pause");
+        jbtStop.setActionCommand("Stop");
+        jbtStart.addActionListener(gf);
+        jbtPause.addActionListener(gf);
+        jbtStop.addActionListener(gf);
 
         botPanel.add(jbtStart);
         botPanel.add(jbtPause);
