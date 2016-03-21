@@ -29,7 +29,8 @@ public class GameField extends JPanel implements ActionListener {
 
     Image snake_t = new ImageIcon("src\\resources\\Snake_T.gif").getImage();
     Image snake_r = new ImageIcon("src\\resources\\Snake_R.gif").getImage();
-    Image snake_b = new ImageIcon("src\\resources\\Snake_B.gif").getImage();
+   // Image snake_b = new ImageIcon("src\\resources\\Snake_B.gif").getImage();
+    Image snake_b = new ImageIcon("src\\resources\\sn.gif").getImage();
     Image snake_l = new ImageIcon("src\\resources\\Snake_L.gif").getImage();
     Image snake_chain = new ImageIcon("src\\resources\\Snake_chain.gif").getImage();
 
