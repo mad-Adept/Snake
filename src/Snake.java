@@ -5,7 +5,7 @@ public class Snake implements Runnable {
     static int widthFrame;
     static int heightFrame;
     int dir = 0;
-    int tail = 2;
+    int tail = 6;
     int[] snake_coord_X = new int[99];
     int[] snake_coord_Y = new int[99];
     Thread threadSnake;
@@ -104,7 +104,7 @@ public class Snake implements Runnable {
                         snake_coord_Y[0] -= 25;
                         break;
                 }
-                Thread.sleep(100);
+                Thread.sleep(450);
 
             } catch (InterruptedException e) {
                 System.out.println("Ошибка в ране змеи");

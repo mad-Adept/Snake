@@ -11,7 +11,28 @@ public class GameField extends JPanel implements ActionListener {
     Snake snake;
     Frog frog;
     Timer mainTimer = new Timer(10, this);
-    Image img = new ImageIcon("src\\resources\\bg.gif").getImage();
+    Image background = new ImageIcon("src\\resources\\bg.gif").getImage();
+    Image green_frog_t = new ImageIcon("src\\resources\\Green_Frog_T.gif").getImage();
+    Image green_frog_r = new ImageIcon("src\\resources\\Green_Frog_R.gif").getImage();
+    Image green_frog_b = new ImageIcon("src\\resources\\Green_Frog_B.gif").getImage();
+    Image green_frog_l = new ImageIcon("src\\resources\\Green_Frog_L.gif").getImage();
+
+    Image blue_frog_t = new ImageIcon("src\\resources\\Blue_Frog_T.gif").getImage();
+    Image blue_frog_r = new ImageIcon("src\\resources\\Blue_Frog_R.gif").getImage();
+    Image blue_frog_b = new ImageIcon("src\\resources\\Blue_Frog_B.gif").getImage();
+    Image blue_frog_l = new ImageIcon("src\\resources\\Blue_Frog_L.gif").getImage();
+
+    Image red_frog_t = new ImageIcon("src\\resources\\Red_Frog_T.gif").getImage();
+    Image red_frog_r = new ImageIcon("src\\resources\\Red_Frog_R.gif").getImage();
+    Image red_frog_b = new ImageIcon("src\\resources\\Red_Frog_B.gif").getImage();
+    Image red_frog_l = new ImageIcon("src\\resources\\Red_Frog_L.gif").getImage();
+
+    Image snake_t = new ImageIcon("src\\resources\\Snake_T.gif").getImage();
+    Image snake_r = new ImageIcon("src\\resources\\Snake_R.gif").getImage();
+    Image snake_b = new ImageIcon("src\\resources\\Snake_B.gif").getImage();
+    Image snake_l = new ImageIcon("src\\resources\\Snake_L.gif").getImage();
+    Image snake_chain = new ImageIcon("src\\resources\\Snake_chain.gif").getImage();
+
 
 
     GameField(int width, int height){
@@ -35,7 +56,7 @@ public class GameField extends JPanel implements ActionListener {
     protected void paintComponent(Graphics gr) {
         super.paintComponent(gr);
         Graphics2D g = (Graphics2D) gr;
-        g.drawImage(img, 0, 0, null);
+        g.drawImage(background, 0, 0, null);
         BasicStroke pen = new BasicStroke(2);
         g.setStroke(pen);
         frog.infoSnake(snake.snake_coord_X, snake.snake_coord_Y, snake.dir);
@@ -50,12 +71,13 @@ public class GameField extends JPanel implements ActionListener {
         g.setColor(new Color(255, 255, 255));
         g.drawString("SCORE: " + score, 0, heightFrame + 15);
 
-        g.setColor(new Color(11, 255, 84));
-        g.fillOval(frog.frog_coord_X, frog.frog_coord_Y, 25, 25);
+        g.drawImage(green_frog_t, frog.frog_coord_X, frog.frog_coord_Y, null);
 
         g.setColor(new Color(255, 100, 100));
-        for (int part = 0; part <= snake.tail - 1; part++){
-            g.fillOval(snake.snake_coord_X[part], snake.snake_coord_Y[part], 25, 25);
+
+        g.drawImage(snake_b, snake.snake_coord_X[0], snake.snake_coord_Y[0], null);
+        for (int part = 1; part <= snake.tail - 1; part++){
+            g.drawImage(snake_chain, snake.snake_coord_X[part], snake.snake_coord_Y[part], null);
         }
     }
 

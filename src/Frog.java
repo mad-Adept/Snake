@@ -109,7 +109,7 @@ public class Frog implements Runnable {
                         frog_coord_Y -= 25;
                         break;
                 }
-                Thread.sleep(500);
+                Thread.sleep(600);
 
             } catch (InterruptedException e) {
                 System.out.println("Ошибка в ране лягушки");
