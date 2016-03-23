@@ -1,44 +1,33 @@
+
 import java.util.Random;
+
 
 public class Frog implements Runnable {
 
-    static int[] snake_coord_X;
-    static int[] snake_coord_Y;
-    static int snakeDirection;
-    static int widthFrame;
-    static int heightFrame;
+    static final int STEP = 25;
 
-
+    int widthFrame;
+    int heightFrame;
     int frog_coord_X;
     int frog_coord_Y;
-    int dir;
+    int dirFrog; // направление змеи
+
+    Snake snake;
     Thread threadFrog;
     boolean suspendFlagFrog;
     String color;
 
 
-    Frog(int widthFrame, int heightFrame, String color) {
+    Frog(int widthFrame, int heightFrame, String color, Snake snake, boolean startFlag) {
 
         this.widthFrame = widthFrame;
         this.heightFrame = heightFrame;
         this.color = color;
-        suspendFlagFrog = false;
+        this.snake = snake;
+        setRandomPosition(snake);
+        suspendFlagFrog = startFlag;
         threadFrog = new Thread(this);
         threadFrog.start();
-    }
-
-    public static void infoSnake(int coord_X[], int coord_Y[], int direction) {
-
-        snake_coord_X = new int[coord_X.length];
-        snake_coord_Y = new int[coord_Y.length];
-
-        for (int iter = 0; iter < coord_X.length; iter++) {
-            snake_coord_X[iter] = coord_X[iter];
-        }
-        for (int iter = 0; iter < coord_Y.length; iter++) {
-            snake_coord_Y[iter] = coord_Y[iter];
-        }
-        snakeDirection = direction;
     }
 
     synchronized void frogSuspend() {
@@ -55,15 +44,17 @@ public class Frog implements Runnable {
         Thread.interrupted();
     }
 
-    public void setRandomPosition() {
+    // Случайная позиция на карте
+    public void setRandomPosition(Snake snake) {
+
         Random random = new Random();
-        frog_coord_X = (Math.round(random.nextInt(widthFrame) / 25)) * 25;
-        frog_coord_Y = (Math.round(random.nextInt(heightFrame) / 25)) * 25;
-        for (int iter_X = 0; iter_X < snake_coord_X.length; iter_X++) {
-            if (frog_coord_X == snake_coord_X[iter_X]) {
-                for (int iter_Y = 0; iter_Y < snake_coord_Y.length; iter_Y++) {
-                    if (frog_coord_Y == snake_coord_Y[iter_Y]) {
-                        setRandomPosition();
+        frog_coord_X = (Math.round(random.nextInt(widthFrame) / STEP)) * STEP;
+        frog_coord_Y = (Math.round(random.nextInt(heightFrame) / STEP)) * STEP;
+        for (int iter_X = 0; iter_X < snake.getSnake_coord_X().length; iter_X++) {
+            if (frog_coord_X == snake.getSnake_coord_X()[iter_X]) {
+                for (int iter_Y = 0; iter_Y < snake.getSnake_coord_Y().length; iter_Y++) {
+                    if (frog_coord_Y == snake.getSnake_coord_Y()[iter_Y]) {
+                        setRandomPosition(snake);
                     }
                 }
             }
@@ -80,41 +71,77 @@ public class Frog implements Runnable {
                         wait();
                     }
                 }
+                // условия изменения направления в заисимости от нахождения змеи на карте
+                if (frog_coord_X > snake.getSnake_coord_X()[0] && (snake.getDir() == 0 || snake.getDir() == 3)) dirFrog = 2;
+                if (frog_coord_X < snake.getSnake_coord_X()[0] && (snake.getDir() == 0 || snake.getDir() == 3)) dirFrog = 1;
+                if (frog_coord_X == snake.getSnake_coord_X()[0] && frog_coord_Y > snake.getSnake_coord_Y()[0]) dirFrog = 0;
+                if (frog_coord_X == snake.getSnake_coord_X()[0] && frog_coord_Y < snake.getSnake_coord_Y()[0]) dirFrog = 3;
+                if (frog_coord_Y > snake.getSnake_coord_Y()[0] && (snake.getDir() == 1 || snake.getDir() == 2)) dirFrog = 0;
+                if (frog_coord_Y < snake.getSnake_coord_Y()[0] && (snake.getDir() == 1 || snake.getDir() == 2)) dirFrog = 3;
+                if (frog_coord_Y == snake.getSnake_coord_Y()[0] && frog_coord_X > snake.getSnake_coord_X()[0]) dirFrog = 2;
+                if (frog_coord_Y == snake.getSnake_coord_Y()[0] && frog_coord_X < snake.getSnake_coord_X()[0]) dirFrog = 1;
 
-                if (frog_coord_X > snake_coord_X[0] && (snakeDirection == 0 || snakeDirection == 3)) dir = 2;
-                if (frog_coord_X < snake_coord_X[0] && (snakeDirection == 0 || snakeDirection == 3)) dir = 1;
-                if (frog_coord_X == snake_coord_X[0] && frog_coord_Y > snake_coord_Y[0]) dir = 0;
-                if (frog_coord_X == snake_coord_X[0] && frog_coord_Y < snake_coord_Y[0]) dir = 3;
-                if (frog_coord_Y > snake_coord_Y[0] && (snakeDirection == 1 || snakeDirection == 2)) dir = 0;
-                if (frog_coord_Y < snake_coord_Y[0] && (snakeDirection == 1 || snakeDirection == 2)) dir = 3;
-                if (frog_coord_Y == snake_coord_Y[0] && frog_coord_X > snake_coord_X[0]) dir = 2;
-                if (frog_coord_Y == snake_coord_Y[0] && frog_coord_X < snake_coord_X[0]) dir = 1;
+                // условия при которых лягушка не выпригивает за экран
+                if (frog_coord_X >= widthFrame - STEP && dirFrog == 2) frog_coord_X = widthFrame - 50;
+                if (frog_coord_X <= 0 && dirFrog == 1) frog_coord_X = STEP;
+                if (frog_coord_Y >= heightFrame - STEP && dirFrog == 0) frog_coord_Y = heightFrame - 50;
+                if (frog_coord_Y <= 0 && dirFrog == 3) frog_coord_Y = STEP;
 
-                if (frog_coord_X >= widthFrame - 25 && dir == 2) frog_coord_X = widthFrame - 50;
-                if (frog_coord_X <= 0 && dir == 1) frog_coord_X = 25;
-                if (frog_coord_Y >= heightFrame - 25 && dir == 0) frog_coord_Y = heightFrame - 50;
-                if (frog_coord_Y <= 0 && dir == 3) frog_coord_Y = 25;
-
-                switch (dir) {
+                // изменения направления с шагом
+                switch (dirFrog) {
                     case 0:
-                        frog_coord_Y += 25;
+                        frog_coord_Y += STEP;
                         break;
                     case 1:
-                        frog_coord_X -= 25;
+                        frog_coord_X -= STEP;
                         break;
                     case 2:
-                        frog_coord_X += 25;
+                        frog_coord_X += STEP;
                         break;
                     case 3:
-                        frog_coord_Y -= 25;
+                        frog_coord_Y -= STEP;
                         break;
+
                 }
-                Thread.sleep(600);
+                Thread.sleep(snake.getDelay() * 3);
 
             } catch (InterruptedException e) {
-                System.out.println("Ошибка в ране лягушки");
+                System.out.println("Exception Frog`s run!");
                 e.printStackTrace();
             }
         }
     }
+
+    public int getFrog_coord_X() {
+        return frog_coord_X;
+    }
+
+    public void setFrog_coord_X(int frog_coord_X) {
+        this.frog_coord_X = frog_coord_X;
+    }
+
+    public int getFrog_coord_Y() {
+        return frog_coord_Y;
+    }
+
+    public void setFrog_coord_Y(int frog_coord_Y) {
+        this.frog_coord_Y = frog_coord_Y;
+    }
+
+    public int getDirFrog() {
+        return dirFrog;
+    }
+
+    public void setDirFrog(int dirFrog) {
+        this.dirFrog = dirFrog;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
 }
