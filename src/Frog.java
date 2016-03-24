@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -16,7 +17,6 @@ public class Frog implements Runnable {
     Thread threadFrog;
     boolean suspendFlagFrog;
     String color;
-
 
     Frog(int widthFrame, int heightFrame, String color, Snake snake, boolean startFlag) {
 
@@ -58,6 +58,35 @@ public class Frog implements Runnable {
                     }
                 }
             }
+        }
+    }
+
+
+    //Проверка на столкновение лягушек, друг с другом
+    public void checkCollisionFrog(ArrayList<Frog> listFrog) {
+
+
+        ArrayList<Frog> cloneFrogList = new ArrayList<Frog>(listFrog);
+        cloneFrogList.remove(this);
+
+        for (Frog iterfrog : cloneFrogList) {
+
+            if (this.getDirFrog() == 0 && this.getFrog_coord_Y() + 25 == iterfrog.getFrog_coord_Y() && this.getFrog_coord_X() == iterfrog.getFrog_coord_X()) {
+                this.frogSuspend();
+            }
+
+            if (this.getDirFrog() == 1 && this.getFrog_coord_Y() == iterfrog.getFrog_coord_Y() && this.getFrog_coord_X() - 25 == iterfrog.getFrog_coord_X()) {
+                this.frogSuspend();
+            }
+
+            if (this.getDirFrog() == 2 && this.getFrog_coord_Y() == iterfrog.getFrog_coord_Y() && this.getFrog_coord_X() + 25 == iterfrog.getFrog_coord_X()) {
+                this.frogSuspend();
+            }
+
+            if (this.getDirFrog() == 3 && this.getFrog_coord_Y() - 25 == iterfrog.getFrog_coord_Y() && this.getFrog_coord_X() == iterfrog.getFrog_coord_X()) {
+                this.frogSuspend();
+            }
+
         }
     }
 

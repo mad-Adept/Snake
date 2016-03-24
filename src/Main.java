@@ -12,7 +12,7 @@ public class Main {
     static int quantityRedFrog;
 
     public static void main(String[] args) throws IOException {
-        try {
+/*        try {
             if (Integer.parseInt(args[0]) < 10) System.out.println("Number of lines cannot be less than 10");
             quantityRows = Integer.parseInt(args[0]);
 
@@ -35,15 +35,15 @@ public class Main {
             quantityRedFrog = Integer.parseInt(args[6]);
         }catch (Exception e){
             System.out.println("A wrong parameter value entered, enter a value again.");
-        }
+        }*/
 
-/*        quantityColumns = 100;
-        quantityRows = 100;
+        quantityColumns = 30;
+        quantityRows = 30;
         lengthSnake = 10;
         delaySnake = 300;
         quantityGreenFrog = 5;
         quantityBlueFrog = 5;
-        quantityRedFrog = 2;*/
+        quantityRedFrog = 2;
 
 
         new GameField(quantityColumns, quantityRows, lengthSnake, delaySnake, quantityGreenFrog,

@@ -73,7 +73,8 @@ public class GameField extends JPanel implements ActionListener {
         g.drawString("SCORE: " + score, 0, heightFrame);
 
         for (Frog frog_iter : listFrog) {
-            chekCollisionFrog();
+            //chekCollisionFrog(frog_iter);
+            frog_iter.checkCollisionFrog(listFrog);
             int dirFrog = frog_iter.getDirFrog();
 
             if (frog_iter.color.equals("Green")){
@@ -212,32 +213,6 @@ public class GameField extends JPanel implements ActionListener {
         }
     }
 
-    //Проверка на столкновение лягушек, друг с другом
-    public void chekCollisionFrog(){
-
-                for(int i = 0; i < listFrog.size(); i++){
-                    for (int j = i + 1; j < listFrog.size(); j++){
-                        if (listFrog.get(i).frog_coord_X == listFrog.get(j).frog_coord_X &&
-                             listFrog.get(i).frog_coord_Y == listFrog.get(j).frog_coord_Y){
-                                int dirFrog = listFrog.get(i).getDirFrog();
-                    switch (dirFrog) {
-                        case 0:
-                            listFrog.get(i).setFrog_coord_Y(listFrog.get(i).getFrog_coord_Y() - STEP);
-                            break;
-                        case 1:
-                            listFrog.get(i).setFrog_coord_X(listFrog.get(i).getFrog_coord_X() + STEP);
-                            break;
-                        case 2:
-                            listFrog.get(i).setFrog_coord_X(listFrog.get(i).getFrog_coord_X() - STEP);
-                            break;
-                        case 3:
-                            listFrog.get(i).setFrog_coord_Y(listFrog.get(i).getFrog_coord_Y() + STEP);
-                            break;
-                    }
-                }
-            }
-        }
-    }
 
 
     public void init(){
@@ -251,8 +226,8 @@ public class GameField extends JPanel implements ActionListener {
 
         JPanel topPanel = new JPanel();
         if(widthFrame > 800 && heightFrame > 600) {
-            topPanel.setPreferredSize(new Dimension(800, 620));
-        }else topPanel.setPreferredSize(new Dimension(widthFrame + 3, heightFrame + STEP));
+            topPanel.setPreferredSize(new Dimension(800, 600));
+        }else topPanel.setPreferredSize(new Dimension(widthFrame + 3, heightFrame));
         topPanel.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(widthFrame, heightFrame));
         JScrollPane scroll = new JScrollPane(this);
